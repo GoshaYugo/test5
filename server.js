@@ -1,14 +1,18 @@
 const WebSocket = require('ws');
+const http = require('http');
 
-const wss = new WebSocket.Server({ port: 8080 });
+// HTTPサーバーの作成
+const server = http.createServer();
+const wss = new WebSocket.Server({ server });
 
-wss.on('connection', (ws) => {
-  console.log('Client connected');
-
-  ws.on('message', (message) => {
-    console.log(`Received: ${message}`);
-    // 他のクライアントにメッセージを送信
-    wss.clients.forEach((client) => {
+wss.on('connection', ws => {
+  console.log('New client connected');
+  
+  // クライアントからのメッセージを受け取る
+  ws.on('message', message => {
+    console.log(`received: ${message}`);
+    // 受け取ったメッセージを他のクライアントに送信
+    wss.clients.forEach(client => {
       if (client !== ws && client.readyState === WebSocket.OPEN) {
         client.send(message);
       }
@@ -20,4 +24,7 @@ wss.on('connection', (ws) => {
   });
 });
 
-console.log('WebSocket server is running on ws://localhost:8080');
+// WebSocketサーバーを3001番ポートで実行
+server.listen(3001, () => {
+  console.log('WebSocket server running on ws://localhost:3001');
+});
