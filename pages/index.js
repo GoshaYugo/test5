@@ -6,7 +6,7 @@ export default function Home() {
 
   useEffect(() => {
     // WebSocketサーバーに接続
-    const socket = new WebSocket('wss://462a-133-55-75-68.ngrok-free.app'); // ngrokの公開URLに変更
+    const socket = new WebSocket('https://462a-133-55-75-68.ngrok-free.app'); // ngrokの公開URLに変更
 
     socket.onopen = () => {
       setIsConnected(true);
