@@ -15,9 +15,9 @@ wss.on('connection', ws => {
     // 受け取ったメッセージを他のクライアントに送信
     wss.clients.forEach(client => {
       if (client !== ws && client.readyState === WebSocket.OPEN) {
-        // 例えば、soundに種類を追加する場合
-        const data = JSON.parse(message);
-        client.send(JSON.stringify(data));
+        // 例えば、音声ファイルのパスをJSON形式で送信
+        const data = { type: 'sound', file: '/sound.mp3' };
+        client.send(JSON.stringify(data));  // JSON.stringifyでJSONとして送信
       }
     });
   });

@@ -11,13 +11,17 @@ export default function Play() {
     socket.onmessage = (event) => {
       console.log('Message from server:', event.data);
 
-      // 受け取ったメッセージをJSONとして解析
-      const message = JSON.parse(event.data);
+      try {
+        // 受け取ったメッセージをJSONとして解析
+        const message = JSON.parse(event.data);
 
-      // 'sound'メッセージの場合
-      if (message.type === 'sound') {
-        const audio = new Audio(message.file); // message.fileに指定された音声を再生
-        audio.play();
+        // 'sound'メッセージの場合
+        if (message.type === 'sound') {
+          const audio = new Audio(message.file);  // message.fileに指定された音声を再生
+          audio.play();
+        }
+      } catch (error) {
+        console.error('Error parsing message:', error);
       }
     };
 
