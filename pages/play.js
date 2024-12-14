@@ -1,6 +1,8 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 export default function Play() {
+  const [audio, setAudio] = useState(null);
+
   useEffect(() => {
     const socket = new WebSocket('ws://133.55.75.68:3001'); // ローカルサーバーに接続
 
@@ -11,17 +13,23 @@ export default function Play() {
     socket.onmessage = (event) => {
       console.log('Message from server:', event.data);
 
-      try {
-        // 受け取ったメッセージをJSONとして解析
-        const message = JSON.parse(event.data);
+      // event.dataがBlobの場合、Textに変換
+      if (event.data instanceof Blob) {
+        const reader = new FileReader();
+        
+        reader.onload = () => {
+          // テキストデータに変換された内容を取得
+          const message = reader.result;
 
-        // 'sound'メッセージの場合
-        if (message.type === 'sound') {
-          const audio = new Audio(message.file);  // message.fileに指定された音声を再生
-          audio.play();
-        }
-      } catch (error) {
-        console.error('Error parsing message:', error);
+          // 受け取ったメッセージが'1'の場合に音を鳴らす
+          if (message === '1') {
+            const audio = new Audio('/sound.mp3');
+            audio.play();
+          }
+        };
+
+        // Blobをテキストに変換
+        reader.readAsText(event.data);
       }
     };
 

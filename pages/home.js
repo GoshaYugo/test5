@@ -30,7 +30,7 @@ export default function Home() {
 
   const handleButtonClick = () => {
     if (ws && isConnected) {
-      ws.send('sound');  // 音声再生の指示を送る
+      ws.send('1');  // 音声再生の指示を送る
     }
   };
 
