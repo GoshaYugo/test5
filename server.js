@@ -5,18 +5,19 @@ const http = require('http');
 const server = http.createServer();
 const wss = new WebSocket.Server({ server });
 
-wss.on('connection', ws => {
+wss.on('connection', (ws) => {
   console.log('New client connected');
-  
-  // クライアントからのメッセージを受け取る
-  ws.on('message', message => {
-    console.log(`received: ${message}`);
-    // 受け取ったメッセージを他のクライアントに送信
-    wss.clients.forEach(client => {
-      if (client !== ws && client.readyState === WebSocket.OPEN) {
-        client.send(message);
-      }
-    });
+
+  ws.on('message', (message) => {
+    console.log(`Received: ${message}`);
+    // 'sound'というメッセージを受け取ったら、全てのクライアントに音を鳴らす指示を送信
+    if (message === 'sound') {
+      wss.clients.forEach((client) => {
+        if (client.readyState === WebSocket.OPEN) {
+          client.send('sound');
+        }
+      });
+    }
   });
 
   ws.on('close', () => {
