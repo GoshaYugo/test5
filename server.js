@@ -7,14 +7,17 @@ const wss = new WebSocket.Server({ server });
 
 wss.on('connection', ws => {
   console.log('New client connected');
-  
+
   // クライアントからのメッセージを受け取る
   ws.on('message', message => {
     console.log(`received: ${message}`);
+
     // 受け取ったメッセージを他のクライアントに送信
     wss.clients.forEach(client => {
       if (client !== ws && client.readyState === WebSocket.OPEN) {
-        client.send(message);
+        // 例えば、soundに種類を追加する場合
+        const data = JSON.parse(message);
+        client.send(JSON.stringify(data));
       }
     });
   });

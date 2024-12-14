@@ -11,9 +11,12 @@ export default function Play() {
     socket.onmessage = (event) => {
       console.log('Message from server:', event.data);
 
-      // 'sound'というメッセージを受け取ったら音を鳴らす
-      if (event.data === 'sound') {
-        const audio = new Audio('/sound.mp3');
+      // 受け取ったメッセージをJSONとして解析
+      const message = JSON.parse(event.data);
+
+      // 'sound'メッセージの場合
+      if (message.type === 'sound') {
+        const audio = new Audio(message.file); // message.fileに指定された音声を再生
         audio.play();
       }
     };
