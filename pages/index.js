@@ -8,12 +8,12 @@ export default function Home() {
       <ul>
         <li>
           <Link href="/home">
-            <a>音を鳴らすボタンを押すページ</a>
+            音を鳴らすボタンを押すページ
           </Link>
         </li>
         <li>
           <Link href="/play">
-            <a>音を鳴らすページ</a>
+            音を鳴らすページ
           </Link>
         </li>
       </ul>

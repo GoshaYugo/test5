@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 
 export default function Play() {
   useEffect(() => {
-    const socket = new WebSocket('ws://localhost:3001'); // ローカルサーバーに接続
+    const socket = new WebSocket('ws://133.55.75.68:3001'); // ローカルサーバーに接続
 
     socket.onopen = () => {
       console.log('WebSocket connected to Play page');

@@ -6,7 +6,7 @@ export default function Home() {
 
   useEffect(() => {
     // WebSocketサーバーに接続
-    const socket = new WebSocket('ws://localhost:3001'); // ローカルサーバーに接続
+    const socket = new WebSocket('ws://133.55.75.68:3001'); // ローカルサーバーに接続
 
     socket.onopen = () => {
       setIsConnected(true);
